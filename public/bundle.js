@@ -2331,12 +2331,12 @@
     if (true) {
       (function() {
         "use strict";
-        var React4 = require_react();
+        var React5 = require_react();
         var _assign = require_object_assign();
         var Scheduler = require_scheduler();
         var checkPropTypes = require_checkPropTypes();
         var tracing = require_tracing();
-        var ReactSharedInternals = React4.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+        var ReactSharedInternals = React5.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
         if (!ReactSharedInternals.hasOwnProperty("ReactCurrentDispatcher")) {
           ReactSharedInternals.ReactCurrentDispatcher = {
             current: null
@@ -2389,7 +2389,7 @@
             }
           }
         }
-        if (!React4) {
+        if (!React5) {
           {
             throw Error("ReactDOM was loaded before React. Make sure you load the React package before loading ReactDOM.");
           }
@@ -3734,7 +3734,7 @@
         var didWarnInvalidChild = false;
         function flattenChildren(children) {
           var content = "";
-          React4.Children.forEach(children, function(child) {
+          React5.Children.forEach(children, function(child) {
             if (child == null) {
               return;
             }
@@ -3745,7 +3745,7 @@
         function validateProps(element, props) {
           {
             if (typeof props.children === "object" && props.children !== null) {
-              React4.Children.forEach(props.children, function(child) {
+              React5.Children.forEach(props.children, function(child) {
                 if (child == null) {
                   return;
                 }
@@ -10779,7 +10779,7 @@
         }
         var fakeInternalInstance = {};
         var isArray = Array.isArray;
-        var emptyRefsObject = new React4.Component().refs;
+        var emptyRefsObject = new React5.Component().refs;
         var didWarnAboutStateAssignmentForComponent;
         var didWarnAboutUninitializedState;
         var didWarnAboutGetSnapshotBeforeUpdateWithoutDidUpdate;
@@ -120209,9 +120209,9 @@ For more info, visit https://fb.me/react-mock-scheduler`);
   };
 
   // src/hooks/useLoanStatus.js
-  const react3 = __toModule(require_react());
+  const react4 = __toModule(require_react());
   const useLoanStatus2 = (loan2) => {
-    const loanStatus = react3.useMemo(() => {
+    const loanStatus = react4.useMemo(() => {
       return getLoanStatus(loan2);
     }, [loan2]);
     return [loanStatus];
@@ -120253,29 +120253,43 @@ For more info, visit https://fb.me/react-mock-scheduler`);
     });
   };
 
-  // src/factories/loan-status.factory.js
-  const loanStatusCopyFactory = {
-    [LOAN_STATUS.ONBOARDING]: {
-      Headline: OnboardingHeadline
-    },
-    [LOAN_STATUS.PAID_OFF]: {
-      Headline: PaidOffHeadline
-    },
-    [LOAN_STATUS.DEFERMENT]: {
-      Headline: DefermentHeadline
-    },
-    [LOAN_STATUS.FORBEARANCE]: {
-      Headline: ForbearanceHeadline
-    },
-    [LOAN_STATUS.UNKNOWN]: {
-      Headline: DefaultHeadline
-    }
+  // src/factories/loan-status.factory.jsx
+  const react3 = __toModule(require_react());
+  const loanStatusCopyFactory = (loan2) => (loanStatus) => {
+    const lookup = {
+      [LOAN_STATUS.ONBOARDING]: {
+        Headline: () => react3.default.createElement(OnboardingHeadline, {
+          name: loan2.firstName
+        })
+      },
+      [LOAN_STATUS.PAID_OFF]: {
+        Headline: () => react3.default.createElement(PaidOffHeadline, {
+          name: loan2.firstName
+        })
+      },
+      [LOAN_STATUS.DEFERMENT]: {
+        Headline: () => react3.default.createElement(DefermentHeadline, {
+          name: loan2.firstName
+        })
+      },
+      [LOAN_STATUS.FORBEARANCE]: {
+        Headline: () => react3.default.createElement(ForbearanceHeadline, {
+          name: loan2.firstName
+        })
+      },
+      [LOAN_STATUS.UNKNOWN]: {
+        Headline: () => react3.default.createElement(DefaultHeadline, {
+          name: loan2.firstName
+        })
+      }
+    };
+    return lookup[loanStatus];
   };
 
   // src/hooks/useLoanCopy.js
   const useLoanHeader = (loan2) => {
     const [loanStatus] = useLoanStatus2(loan2);
-    return loanStatusCopyFactory[loanStatus];
+    return loanStatusCopyFactory(loan2)(loanStatus);
   };
 
   // src/components/LoanDetails.jsx
@@ -120283,9 +120297,7 @@ For more info, visit https://fb.me/react-mock-scheduler`);
   const LoanDetails2 = () => {
     const loan2 = getLoan();
     const {Headline: Headline3} = useLoanHeader(loan2);
-    return react2.default.createElement("div", null, react2.default.createElement(Headline3, {
-      name: loan2.firstName
-    }));
+    return react2.default.createElement("div", null, react2.default.createElement(Headline3, null));
   };
 
   // src/App.js

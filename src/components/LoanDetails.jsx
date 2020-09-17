@@ -10,7 +10,7 @@ export const LoanDetails = () => {
 
   return (
     <div>
-      <Headline name={loan.firstName} />
+      <Headline />
     </div>
   );
 }

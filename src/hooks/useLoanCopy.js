@@ -3,5 +3,5 @@ import { loanStatusCopyFactory } from '../factories/loan-status.factory';
 
 export const useLoanHeader = (loan) => {
   const [ loanStatus ] = useLoanStatus(loan);
-  return loanStatusCopyFactory[loanStatus]
+  return loanStatusCopyFactory(loan)(loanStatus);
 };
