@@ -120217,55 +120217,74 @@ For more info, visit https://fb.me/react-mock-scheduler`);
     return [loanStatus];
   };
 
-  // src/factories/loan-status.factory.js
-  const loanStatusCopyFactory = {
-    [LOAN_STATUS.ONBOARDING]: {
-      title: (name, date) => `Hey ${name}, your onboarding`,
-      headlineSubtext: (amount, date) => `Make your first payment`
-    },
-    [LOAN_STATUS.PAID_OFF]: {
-      title: (name, date) => `Hey ${name}, your loan is paid off!`,
-      headlineSubtext: (amount, date) => `No more payments needed!`
-    },
-    [LOAN_STATUS.DEFERMENT]: {
-      title: (name, date) => `Hey ${name}, we'll wait on you.`,
-      headlineSubtext: (amount, date) => `Take as long as you want`
-    },
-    [LOAN_STATUS.FORBEARANCE]: {
-      title: (name, date) => `Hey ${name},
-    better luck next time.`,
-      headlineSubtext: (amount, date) => `We can help you.`
-    },
-    [LOAN_STATUS.UNKNOWN]: {
-      title: (name, date) => `Hey ${name}, we don't know about you.`,
-      headlineSubtext: (amount, date) => `Let's get more information`
-    }
-  };
-
-  // src/hooks/useLoanCopy.js
-  const useLoanHeaderCopy = (loan2) => {
-    const [loanStatus] = useLoanStatus2(loan2);
-    const {title, headlineSubtext} = loanStatusCopyFactory[loanStatus];
-    return [
-      title(loan2.firstName, loan2.originationDate),
-      headlineSubtext(loan2.currentLoanBalance, loan2.originationDate)
-    ];
-  };
-
   // src/components/Headline.jsx
   const react = __toModule(require_react());
   const Headline = ({title, text}) => {
     return react.default.createElement("header", null, react.default.createElement("h1", null, title), react.default.createElement("h2", null, text));
+  };
+  const OnboardingHeadline = ({name}) => {
+    return react.default.createElement(Headline, {
+      title: `Hey ${name}, you're onboarding`,
+      text: `Welcome to the family`
+    });
+  };
+  const PaidOffHeadline = ({name}) => {
+    return react.default.createElement(Headline, {
+      title: `Hey ${name}, your loan is paid off!`,
+      text: `No more payments needed!`
+    });
+  };
+  const DefermentHeadline = ({name}) => {
+    return react.default.createElement(Headline, {
+      title: `Hey ${name}, we'll wait on you.`,
+      text: `Take as long as you want`
+    });
+  };
+  const ForbearanceHeadline = ({name}) => {
+    return react.default.createElement(Headline, {
+      title: `Hey ${name}, better luck next time.`,
+      text: `We can help you.`
+    });
+  };
+  const DefaultHeadline = ({name}) => {
+    return react.default.createElement(Headline, {
+      title: `Hey ${name}, we don't know about you.`,
+      text: `Let's get more information`
+    });
+  };
+
+  // src/factories/loan-status.factory.js
+  const loanStatusCopyFactory = {
+    [LOAN_STATUS.ONBOARDING]: {
+      Headline: OnboardingHeadline
+    },
+    [LOAN_STATUS.PAID_OFF]: {
+      Headline: PaidOffHeadline
+    },
+    [LOAN_STATUS.DEFERMENT]: {
+      Headline: DefermentHeadline
+    },
+    [LOAN_STATUS.FORBEARANCE]: {
+      Headline: ForbearanceHeadline
+    },
+    [LOAN_STATUS.UNKNOWN]: {
+      Headline: DefaultHeadline
+    }
+  };
+
+  // src/hooks/useLoanCopy.js
+  const useLoanHeader = (loan2) => {
+    const [loanStatus] = useLoanStatus2(loan2);
+    return loanStatusCopyFactory[loanStatus];
   };
 
   // src/components/LoanDetails.jsx
   const react2 = __toModule(require_react());
   const LoanDetails2 = () => {
     const loan2 = getLoan();
-    const [title, text] = useLoanHeaderCopy(loan2);
-    return react2.default.createElement("div", null, react2.default.createElement(Headline, {
-      title,
-      text
+    const {Headline: Headline3} = useLoanHeader(loan2);
+    return react2.default.createElement("div", null, react2.default.createElement(Headline3, {
+      name: loan2.firstName
     }));
   };
 

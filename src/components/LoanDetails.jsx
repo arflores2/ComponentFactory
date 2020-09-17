@@ -2,17 +2,16 @@ import React from 'react';
 
 import { getLoan } from '../services/loan.service';
 
-import { useLoanHeaderCopy } from '../hooks/useLoanCopy';
-
-import { Headline } from './Headline';
+import { useLoanHeader } from '../hooks/useLoanCopy';
 
 export const LoanDetails = () => {
   const loan = getLoan();
-  const [ title, text ] = useLoanHeaderCopy(loan);
+  const { Headline } = useLoanHeader(loan);
 
   return (
     <div>
-      <Headline title={title} text={text} />
+      <Headline name={loan.firstName} />
     </div>
   );
 }
+

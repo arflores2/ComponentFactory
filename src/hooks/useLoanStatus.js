@@ -7,5 +7,5 @@ export const useLoanStatus = (loan) => {
     return getLoanStatus(loan)
   }, [loan]);
 
-  return [loanStatus];
+  return [ loanStatus ];
 };
