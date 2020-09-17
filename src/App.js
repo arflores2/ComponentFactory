@@ -1,3 +1,5 @@
+import './why-did-you-render';
+
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 

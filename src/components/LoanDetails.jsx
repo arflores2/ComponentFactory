@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { getLoan } from '../services/loan.service';
 
 import { useLoanHeader } from '../hooks/useLoanCopy';
 
-export const LoanDetails = () => {
-  const loan = getLoan();
+const LoanDetails = () => {
+  const [loan, setLoan] = useState(getLoan())
+
   const { Headline } = useLoanHeader(loan);
 
   return (
@@ -14,4 +15,9 @@ export const LoanDetails = () => {
     </div>
   );
 }
+
+LoanDetails.whyDidYouRender = true;
+
+export { LoanDetails };
+
 
