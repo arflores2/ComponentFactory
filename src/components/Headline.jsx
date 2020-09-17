@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const Headline = ({ title, text }) => {
+const Headline = ({ title, text }) => {
   return (
     <header>
       <h1>{title}</h1>
@@ -8,3 +8,5 @@ export const Headline = ({ title, text }) => {
     </header>
   )
 };
+Headline.whyDidYouRender = true;
+export { Headline };

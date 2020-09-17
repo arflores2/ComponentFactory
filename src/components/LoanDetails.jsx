@@ -6,7 +6,7 @@ import { useLoanHeaderCopy } from '../hooks/useLoanCopy';
 
 import { Headline } from './Headline';
 
-export const LoanDetails = () => {
+const LoanDetails = () => {
   const loan = getLoan();
   const [ title, text ] = useLoanHeaderCopy(loan);
 
@@ -16,3 +16,5 @@ export const LoanDetails = () => {
     </div>
   );
 }
+LoanDetails.whyDidYouRender = true;
+export { LoanDetails };
